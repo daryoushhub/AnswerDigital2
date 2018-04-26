@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        $(document).ready(function (){
+            $(this).ajaxStart(function () {
+                $('.myClass').show();
+            }).ajaxStop(function () {
+                $('.myClass').hide();
+            });
+
+            $('#btnload').click(function () {
+                $.ajax({
+                    type: "Get",
+                    contentType: "applicatin/json; charset=utf-8",
+                    url: "api/People",
+                    data: '{}',
+                    dataType: "json",
+                    success: function (data) {
+                        var s = "";
+                        for (var i = 0; i < data.length; i++) {
+                            s += "<tr>" +
+                                "<td>" + data[i].PersonId + "</td>" +
+                                "<td>" + data[i].FirstName + "</td>" +
+                                "<td>" + data[i].LastName + "</td>" +
+                                "<td>" + data[i].IsAuthorised + "</td>" +
+                                "<td>" + data[i].IsValid + "</td>" +
+                                "<td>" + data[i].IsEnabled + "</td>" +
+                                "</tr>"
+                        }
+                        $('#tb').html(s);
+                    }
+                });
+            });
+          });
+
+    </script>
+    
+</head>
+<body>
+    <h1>People Details...</h1>
+    <input type="button" id="btnload" value="Load Data..." />
+    <div id="loading" style="display:none" class="myClass">
+
+    </div>
+    
+        <table style="width:100%;">
+            <thead>
+                <tr>
+                    <th>PersonId</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>IsAuthorised</th>
+                    <th>IsValid</th>
+                    <th>IsEnadled</th>
+                </tr>
+            </thead>
+            <tbody id="tb">
+
+            </tbody>
+    </table>
+</body>
+</html>
